@@ -1,0 +1,25 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: cloud-consumer-openfeign-order
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        prefer-ip-address: true #优先使用服务ip进行注册
+        service-name: ${spring.application.name}
+    openfeign:
+      client:
+        config:
+          default:
+            #连接超时时间（ms）三秒钟
+            connectTimeout: 3000
+            #读取超时时间
+            readTimeout: 3000
+          #服务名称与服务配置对应，此处与服务名称一致即可
+          cloud-provider-service:
+            connectTimeout: 8000
+            readTimeout: 8000
