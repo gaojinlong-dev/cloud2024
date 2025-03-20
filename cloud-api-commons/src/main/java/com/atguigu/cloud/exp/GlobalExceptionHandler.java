@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @Version 1.0
  */
 @Slf4j
-@RestControllerAdvice // 全局异常处理
+//@RestControllerAdvice // 全局异常处理
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)

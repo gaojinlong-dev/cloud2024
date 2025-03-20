@@ -49,5 +49,16 @@ public class PayCircuitController
 
 
 
+    //=========Resilience4j ratelimit 限流 的例子
+    @GetMapping(value = "/pay/ratelimit/{id}")
+    public String myRatelimit(@PathVariable("id") Integer id)
+    {
+        return "Hello, myRatelimit欢迎到来 inputId:  "+id+" \t " + IdUtil.simpleUUID();
+    }
+
+
+
+
+
 
 }

@@ -3,6 +3,7 @@ package com.atguigu.cloud.controller;
 import com.atguigu.cloud.apis.PayFeignApi;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,4 +83,24 @@ public class OrderCircuitController {
     {
         return CompletableFuture.supplyAsync(() -> "Bulkhead.Type.THREADPOOL，系统繁忙，请稍后再试-----/(ㄒoㄒ)/~~");
     }
+
+
+    /**
+     * 限流 ,RateLimiter注解用在方法上，表示该方法开启了限流功能,name属性指定限流的名称，fallbackMethod属性指定当服务降级时调用的方法。
+     * @param id
+     * @return
+     */
+
+    @GetMapping(value = "/feign/pay/ratelimit/{id}")
+    @RateLimiter(name = "cloud-payment-service",fallbackMethod = "myRatelimitFallback")
+    public String myBulkhead(@PathVariable("id") Integer id)
+    {
+        return payFeignApi.myRatelimit(id);
+    }
+    public String myRatelimitFallback(Integer id,Throwable t)
+    {
+        return "你被限流了，禁止访问/(ㄒoㄒ)/~~";
+    }
+
+
 }

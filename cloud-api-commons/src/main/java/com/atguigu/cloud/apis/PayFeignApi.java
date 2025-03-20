@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * ClassName: PayFeignApi
  * Package: com.atguigu.cloud.apis
- * Description:
+ * Description: 支付服务接口定义，用于远程调用支付服务的接口
  *
  * @Author 高金龙
  * @Create 2025/3/7 20:27
  * @Version 1.0
  */
-@FeignClient(value = "cloud-payment-service")
+//@FeignClient(value = "cloud-payment-service")
+@FeignClient(value = "cloud-gateway")
 public interface PayFeignApi {
 
 
@@ -62,6 +63,40 @@ public interface PayFeignApi {
      */
     @GetMapping(value = "/pay/bulkhead/{id}")
     public String myBulkhead(@PathVariable("id") Integer id);
+
+
+    /**
+     * Resilience4j Ratelimit 限流 的例子
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/pay/ratelimit/{id}")
+    public String myRatelimit(@PathVariable("id") Integer id);
+
+    /**
+     *Micrometer(Sleuth)进行链路监控的例子
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/pay/micrometer/{id}")
+    public String myMicrometer(@PathVariable("id") Integer id);
+
+
+
+    /**
+     * GateWay进行网关测试案例01
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/pay/gateway/get/{id}")
+    public ResultData getById(@PathVariable("id") Integer id);
+
+    /**
+     * GateWay进行网关测试案例02
+     * @return
+     */
+    @GetMapping(value = "/pay/gateway/info")
+    public ResultData<String> getGatewayInfo();
 
 
 }
